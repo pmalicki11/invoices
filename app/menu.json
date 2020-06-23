@@ -1,0 +1,5 @@
+{
+  "Home": "home/index",
+  "Customers": "customers/index",
+  "Invoices": "invoices/index"
+}
