@@ -2,7 +2,7 @@ body {
 	box-sizing: border-box;
 }
 
-input, select, textarea {    
+input, select, textarea {
     -ms-box-sizing:content-box;
     -moz-box-sizing:content-box;
     box-sizing:content-box;
@@ -108,10 +108,22 @@ input, select, textarea {
 
 .btn-submit {
   background-color: #4d94ff;
+	margin: 0px 15px;
   border: none;
   border-radius: 5px;
   color: white;
   padding: 10px 60px;
+  opacity: 1;
+  transition: 0.2s;
+}
+
+.btn-additional {
+  background-color: #4d94ff;
+	margin: 0px 15px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 10px;
   opacity: 1;
   transition: 0.2s;
 }
@@ -126,85 +138,25 @@ input, select, textarea {
   transition: 0.2s;
 }
 
-.btn-submit:hover, .btn-remove:hover {
+.btn-submit:hover, .btn-remove:hover, .btn-additional:hover {
   opacity: 0.7;
 }
 
-.chosen-container {
-	cursor: text;
-  width: 400px;
-  padding: 3px 5px;
-}
-
-.chosen-choices {
-	display: inline-block;
-	list-style: none;
-	height: auto;
-	padding: 0px;
-	margin: 0px;
-}
-
-.chosen-choices li {
-	display: flex;
-	float: left;
-	overflow: hidden;
-  cursor: default;
-  align-items: center;
-}
-
-.chosen-choices li.search-choice {
-	background-color: #d9d9d9;
-  padding: 4px;
-  margin: 2px 2px 0px 0px;
-  border-radius: 5px;
-	font-size: 80%;
-}
-
-.search-choice i {
-  margin-left: 2px;
-}
-
-.chosen-choices li.chosen-search-field {
-	border-style: none;
-}
-
-.chosen-search-input {
-  flex: 1;
-  border: 0;
-  padding: 0px;
-  outline: none;
-}
-
-.chosen-search-input:focus {
-  border-style: none;
-  outline: none;
-}
-
-.chosen-dropdown {
-	background-color: yellow;
-	margin: 0px 5px;
-	background-color: #d9d9d9;
-  padding: 0px;
-  border-radius: 5px;
-
-}
-
-.chosen-results {
+.invPositions {
 	list-style-type: none;
-	padding: 0px;
-	margin: 0px;
+	border: solid 1px black;
+	margin: 10px auto;
+	padding: 10px;
+	width: 500px;
 }
 
-.chosen-results li {
-	padding: 5px;
-	padding-left: 40px;
-	border-radius: 5px;
+div.row {
+	display:table-row;
 }
 
-.chosen-results li:hover {
-	background-color: #bfbfbf;
+.invPositions label, .invPositions input  {
+	display: table-cell;
 }
-
 
 
 @media screen and (max-width: 640px) {

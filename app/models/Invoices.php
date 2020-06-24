@@ -6,6 +6,7 @@
     private $_number;
     private $_customer;
     private $_date;
+    private $_invoicePositions = [];
     private $_db;
     private $_errors = [];
     private $_table;
@@ -27,6 +28,19 @@
       $this->_number = $array['number'];
       $this->_customer = $array['customer'];
       $this->_date = $array['date'];
+
+      if(isset($array['posName']) && isset($array['posQuantity']) && isset($array['posUnitPrice']) && isset($array['posValue'])) {
+        for($i = 0; $i < count($array['posName']); $i++) {
+          $this->_invoicePositions[] = new InvoicePositions(
+            $array['number'],
+            $i,
+            $array['posName'][$i],
+            $array['posQuantity'][$i],
+            $array['posUnitPrice'][$i],
+            $array['posValue'][$i]
+          );
+        }
+      }
     }
 
 
@@ -64,6 +78,10 @@
         $this->_customer,
         $this->_date
       ]);
+
+      foreach ($this->_invoicePositions as $position) {
+        $position->insert();
+      }
     }
 
 
