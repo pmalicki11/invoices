@@ -16,7 +16,7 @@
       $this->_customer = $customer;
       $this->_date = $date;
       $this->_db = Database::getInstance();
-      $this->_table = 'customers';
+      $this->_table = 'invoices';
     }
 
 
@@ -67,36 +67,32 @@
     }
 
 
-    public function update() {
-      if(strlen($this->_id) > 0) {
-        $query = $this->_db->pdo->prepare(
-          "UPDATE `{$this->_table}` SET
-            `number` = ?,
-            `customer` = ?,
-            `date` = ?
-          WHERE `id` = ?"
-        );
-
-        $query->execute([
-          $this->_number,
-          $this->_customer,
-          $this->_date,
-          $this->_id
-        ]);
-      }
-    }
-
-
     public function delete($id) {
       $query = $this->_db->pdo->prepare("DELETE FROM `{$this->_table}` WHERE `id` = ?");
       return $query->execute([$id]);
     }
 
 
+    public function getNextNumber() {
+      $query = $this->_db->pdo->prepare(
+        "SELECT SUBSTR(`number`, 4) AS `lastNumber` FROM `invoices`
+        WHERE SUBSTR(`number`, 1, 2) = DATE_FORMAT(CURDATE(), '%y')
+        ORDER BY `number` DESC LIMIT 1"
+      );
+      $query->execute();
+      $result = $query->fetchAll(PDO::FETCH_NAMED);
+      $nextNumber = count($result) > 0 ? intval($result[0]['lastNumber']) + 1 : 1;
+      $numDigits = 7;
+      $this->_number = substr(date("Y"), -2) . '-';
+      $this->_number .= str_pad($nextNumber, $numDigits, '0', STR_PAD_LEFT);
+      return $this->_number;
+    }
+
+
     public function getAll() {
       $query = $this->_db->pdo->prepare(
         "SELECT I.*, C.name AS customerName
-        FROM invoices I LEFT JOIN customers C ON I.customer = C.id "
+        FROM `invoices` I LEFT JOIN `customers` C ON I.customer = C.id "
       );
       $query->execute();
       return $query->fetchAll(PDO::FETCH_NAMED);
@@ -123,7 +119,7 @@
         $this->_errors += ['customer' => 'Customer can not be empty'];
       }
       if(strlen($this->_date) == 0) {
-        $this->_errors += ['date' => 'date can not be empty'];
+        $this->_errors += ['date' => 'Date can not be empty'];
       }
 
       if(count($this->_errors) > 0) {

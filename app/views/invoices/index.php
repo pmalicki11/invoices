@@ -15,9 +15,6 @@
         <td><?=$invoice['customerName']?></td>
         <td><?=$invoice['date']?></td>
         <td>
-          <a href="<?=PROOT?>invoices/edit/<?=$invoice['id']?>">Edit</a>
-        </td>
-        <td>
           <a href="<?=PROOT?>invoices/delete/<?=$invoice['id']?>" onclick="if(!confirm('Are you sure?')){return false;}">Remove</a>
         </td>
       </tr>
