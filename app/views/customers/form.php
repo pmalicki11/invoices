@@ -11,8 +11,14 @@
     class="form-input-text<?=(array_key_exists('address', $this->errors) ? '-error' : '')?>"></td>
 </tr>
 <tr>
+  <td><label for="taxCode">Tax Code:</label></td>
+  <td><input type="text" id="taxCode" name="taxCode"
+    value="<?=(isset($_POST['taxCode'])) ? $_POST['taxCode'] : ''?>"
+    class="form-input-text<?=(array_key_exists('taxCode', $this->errors) ? '-error' : '')?>"></td>
+</tr>
+<tr>
   <td><label for="zip">Zip Code:</label></td>
-<td><input type="text" id="zip" name="zip"
+  <td><input type="text" id="zip" name="zip"
     value="<?=(isset($_POST['zip'])) ? $_POST['zip'] : ''?>"
     class="form-input-text<?=(array_key_exists('zip', $this->errors) ? '-error' : '')?>"></td>
 </tr>

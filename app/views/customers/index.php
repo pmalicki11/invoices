@@ -6,6 +6,7 @@
     <tr>
       <th>Name</th>
       <th>Address</th>
+      <th>Tax Code</th>
       <th>Zip Code</th>
       <th>State</th>
       <th>Country</th>
@@ -16,6 +17,7 @@
       <tr>
         <td><?=$customer['name']?></td>
         <td><?=$customer['address']?></td>
+        <td><?=$customer['taxCode']?></td>
         <td><?=$customer['zip']?></td>
         <td><?=$customer['state']?></td>
         <td><?=$customer['countryName']?></td>

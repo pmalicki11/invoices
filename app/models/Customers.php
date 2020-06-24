@@ -5,6 +5,7 @@
     private $_id;
     private $_name;
     private $_address;
+    private $_taxCode;
     private $_zip;
     private $_state;
     private $_country;
@@ -14,9 +15,10 @@
     private $_table;
 
 
-    public function __construct($name = '', $address = '', $zip = '', $state = '', $country = '', $contact = '') {
+    public function __construct($name = '', $address = '', $taxCode = '', $zip = '', $state = '', $country = '', $contact = '') {
       $this->_name = $name;
       $this->_address = $address;
+      $this->_taxCode = $taxCode;
       $this->_zip = $zip;
       $this->_state = $state;
       $this->_country = $country;
@@ -32,6 +34,7 @@
       }
       $this->_name = $array['name'];
       $this->_address = $array['address'];
+      $this->_taxCode = $array['taxCode'];
       $this->_zip = $array['zip'];
       $this->_state = $array['state'];
       $this->_country = $array['country'];
@@ -43,6 +46,7 @@
       $_POST['id'] = $this->_id;
       $_POST['name'] = $this->_name;
       $_POST['address'] = $this->_address;
+      $_POST['taxCode'] = $this->_taxCode;
       $_POST['zip'] = $this->_zip;
       $_POST['state'] = $this->_state;
       $_POST['country'] = $this->_country;
@@ -67,13 +71,14 @@
 
     public function insert() {
       $query = $this->_db->pdo->prepare(
-        "INSERT INTO `{$this->_table}` (`name`, `address`, `zip`, `state`, `country`, `contact`)
-          VALUES (?, ?, ?, ?, ?, ?)"
+        "INSERT INTO `{$this->_table}` (`name`, `address`, `taxCode`, `zip`, `state`, `country`, `contact`)
+          VALUES (?, ?, ?, ?, ?, ?, ?)"
       );
 
       $query->execute([
         $this->_name,
         $this->_address,
+        $this->_taxCode,
         $this->_zip,
         $this->_state,
         $this->_country,
@@ -88,6 +93,7 @@
           "UPDATE `{$this->_table}` SET
             `name` = ?,
             `address` = ?,
+            `taxCode` = ?,
             `zip` = ?,
             `state` = ?,
             `country` = ?,
@@ -98,6 +104,7 @@
         $query->execute([
           $this->_name,
           $this->_address,
+          $this->_taxCode,
           $this->_zip,
           $this->_state,
           $this->_country,
@@ -113,11 +120,13 @@
       return $query->execute([$id]);
     }
 
+
     public function getList() {
       $query = $this->_db->pdo->prepare("SELECT * FROM customers ORDER BY `id`");
       $query->execute();
       return $query->fetchAll(PDO::FETCH_NAMED);
     }
+
 
     public function getAll() {
       $query = $this->_db->pdo->prepare(
@@ -147,6 +156,9 @@
       }
       if(strlen($this->_address) == 0) {
         $this->_errors += ['address' => 'Address can not be empty'];
+      }
+      if(strlen($this->_taxCode) < 10) {
+        $this->_errors += ['taxCode' => 'Tax code can not be empty'];
       }
       if(strlen($this->_zip) == 0) {
         $this->_errors += ['zip' => 'Zip code can not be empty'];
