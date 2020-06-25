@@ -7,6 +7,8 @@
       <th>Number</th>
       <th>Customer</th>
       <th>Date</th>
+      <th>Net value</th>
+      <th>Gross value</th>
       <th></th>
     </tr>
     <?php foreach($this->invoices as $invoice): ?>
@@ -14,6 +16,8 @@
         <td><a href="<?=PROOT?>invoices/showInvoice/<?=$invoice['id']?>"><?=$invoice['number']?></a></td>
         <td><?=$invoice['customerName']?></td>
         <td><?=$invoice['date']?></td>
+        <td><?=$invoice['totalNet']?></td>
+        <td><?=$invoice['totalGross']?></td>
         <td>
           <a href="<?=PROOT?>invoices/delete/<?=$invoice['id']?>" onclick="if(!confirm('Are you sure?')){return false;}">Remove</a>
         </td>

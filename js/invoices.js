@@ -9,7 +9,10 @@ window.addEventListener('load', function () {
   invPositionFields = {
     posName: 'Name',
     posQuantity: 'Quantity',
+    posUnit: 'Unit',
     posUnitPrice: 'Unit price',
+    posNetValue: 'Net value',
+    posTaxPercent: 'Tax',
     posValue: 'Value'
   };
   numOfPositions = 0;
@@ -23,6 +26,7 @@ function addPosition() {
   var legend = document.createElement("legend");
 
   fieldset.setAttribute('class', 'invPositions');
+  fieldset.setAttribute('id', ('invPos-' + numOfPositions));
   legend.innerHTML = 'Position ' + (numOfPositions + 1);
   fieldset.appendChild(legend);
 
@@ -35,9 +39,17 @@ function addPosition() {
     label.setAttribute("for", pName);
     label.innerHTML = pLabel + ':';
     input.setAttribute('type', 'text');
-    input.setAttribute('id', pName);
+    input.setAttribute('id', pName + '-' + numOfPositions);
     input.setAttribute('name', pName + '[' + numOfPositions + ']');
     input.setAttribute('class', 'form-input-text');
+
+    if(pName == 'posNetValue' || pName == 'posValue') {
+      input.setAttribute('readonly', '');
+    }
+
+    if(pName == 'posQuantity' || pName == 'posUnitPrice' || pName == 'posTaxPercent') {
+      input.addEventListener('focusout', updateValues);
+    }
 
     div.appendChild(label);
     div.appendChild(input);
@@ -45,4 +57,23 @@ function addPosition() {
   }
   invPositionsContainer.appendChild(fieldset);
   numOfPositions++;
+}
+
+function updateValues() {
+  var positionId = this.parentNode.parentNode.id.substr(7);
+
+  var quantity = document.getElementById("posQuantity-" + positionId);
+  var unitPrice = document.getElementById("posUnitPrice-" + positionId);
+  var netValue = document.getElementById("posNetValue-" + positionId);
+  var tax = document.getElementById("posTaxPercent-" + positionId);
+  var grossValue = document.getElementById("posValue-" + positionId);
+
+  quantity.value = quantity.value.replace(',', '.');
+  unitPrice.value = unitPrice.value.replace(',', '.');
+  netValue.value = netValue.value.replace(',', '.');
+  tax.value = tax.value.replace(',', '.');
+  grossValue.value = grossValue.value.replace(',', '.');
+
+  netValue.value = Number(quantity.value) * Number(unitPrice.value);
+  grossValue.value = Number(netValue.value) * Number(tax.value) / 100 + Number(netValue.value);
 }

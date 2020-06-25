@@ -154,12 +154,44 @@ div.row {
 	display:table-row;
 }
 
+div.cell {
+	display:table-cell;
+}
+
 .invPositions label, .invPositions input  {
 	display: table-cell;
 }
 
+.inv-header {
+	display: table;
+	margin: 0px 100px;
+	width: calc(100% - 200px);
+}
 
-@media screen and (max-width: 640px) {
+.inv-company {
+	float:right;
+}
+
+.inv-customer {
+	float: left;
+}
+
+.inv-positions {
+	margin: 50px 100px 0px 100px;
+}
+
+.inv-summary {
+	float:right;
+	font-weight: bold;
+	margin-right: 150px;
+	margin-top: 50px;
+}
+
+.inv-summary td {
+	padding: 5px;
+}
+
+@media screen and (max-width: 400px) {
   .nav-item, .nav-item-right {
     float: none;
   }

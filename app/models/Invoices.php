@@ -7,6 +7,8 @@
     private $_customer;
     private $_date;
     private $_invoicePositions = [];
+    private $_totalNet;
+    private $_totalGross;
     private $_db;
     private $_errors = [];
     private $_table;
@@ -29,14 +31,17 @@
       $this->_customer = $array['customer'];
       $this->_date = $array['date'];
 
-      if(isset($array['posName']) && isset($array['posQuantity']) && isset($array['posUnitPrice']) && isset($array['posValue'])) {
+      if(isset(($array['posName']))) {
         for($i = 0; $i < count($array['posName']); $i++) {
           $this->_invoicePositions[] = new InvoicePositions(
             '',
             $i,
             $array['posName'][$i],
             $array['posQuantity'][$i],
+            $array['posUnit'][$i],
             $array['posUnitPrice'][$i],
+            $array['posNetValue'][$i],
+            $array['posTaxPercent'][$i],
             $array['posValue'][$i]
           );
         }
@@ -80,11 +85,26 @@
       ]);
 
       $id = $this->_db->pdo->lastInsertId();
+      $totalNet = 0;
+      $totalGross = 0;
 
       foreach ($this->_invoicePositions as $position) {
         $position->setInvoice($id);
+        $totalNet += $position->getNetValue();
+        $totalGross += $position->getValue();
         $position->insert();
       }
+
+      $this->_totalNet = $totalNet;
+      $this->_totalGross = $totalGross;
+
+      $query = $this->_db->pdo->prepare("UPDATE {$this->_table} SET `totalNet` = ?,`totalGross` = ?
+        WHERE `id` = ?");
+      $query->execute([
+        $this->_totalNet,
+        $this->_totalGross,
+        $id
+      ]);
     }
 
 
