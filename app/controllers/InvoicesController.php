@@ -17,6 +17,19 @@
     }
 
 
+    public function showInvoiceAction($id) {
+      $this->_view->invoice = $this->_model->getById($id)[0];
+      $customer = new Customers();
+      $this->_view->customer = $customer->getById($this->_view->invoice['customer'])[0];
+      $country = new Countries();
+      $this->_view->country = $country->getById($this->_view->customer['country'])[0];
+      $positions = new InvoicePositions();
+      $this->_view->positions = $positions->getByInvoiceId($id);
+
+      $this->_view->render('invoices/show');
+    }
+
+
     public function addAction() {
       $customers = new Customers();
       $this->_view->customers = $customers->getList();

@@ -8,7 +8,7 @@
     <?=$this->content('head');?>
   </head>
   <body>
-    <h1>Food Registration</h1>
+    <h1>Invoices</h1>
     <?php include 'menu.php'; ?>
     <?=$this->content('body');?>
   </body>

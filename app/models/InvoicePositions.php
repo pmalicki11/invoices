@@ -26,6 +26,11 @@
     }
 
 
+    public function setInvoice($invoiceId) {
+      $this->_invoice = $invoiceId;
+    }
+
+
     public function insert() {
       $query = $this->_db->pdo->prepare(
         "INSERT INTO `{$this->_table}` (`invoice`, `position`, `name`, `quantity`, `unitPrice`, `value`)
@@ -40,5 +45,17 @@
         $this->_unitPrice,
         $this->_value
       ]);
+    }
+
+
+    public function getByInvoiceId($id) {
+      $query = $this->_db->pdo->prepare("SELECT * FROM `{$this->_table}` WHERE `invoice` = ?");
+      $query->execute([$id]);
+      $results = $query->fetchAll(PDO::FETCH_NAMED);
+
+      if(count($results) == 1) {
+        $this->getFromArray($results[0]);
+      }
+      return $results;
     }
   }

@@ -11,7 +11,7 @@
     </tr>
     <?php foreach($this->invoices as $invoice): ?>
       <tr>
-        <td><?=$invoice['number']?></td>
+        <td><a href="<?=PROOT?>invoices/showInvoice/<?=$invoice['id']?>"><?=$invoice['number']?></a></td>
         <td><?=$invoice['customerName']?></td>
         <td><?=$invoice['date']?></td>
         <td>

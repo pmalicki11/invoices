@@ -32,7 +32,7 @@
       if(isset($array['posName']) && isset($array['posQuantity']) && isset($array['posUnitPrice']) && isset($array['posValue'])) {
         for($i = 0; $i < count($array['posName']); $i++) {
           $this->_invoicePositions[] = new InvoicePositions(
-            $array['number'],
+            '',
             $i,
             $array['posName'][$i],
             $array['posQuantity'][$i],
@@ -73,13 +73,16 @@
           VALUES (?, ?, ?)"
       );
 
-      $query->execute([
+      $results = $query->execute([
         $this->_number,
         $this->_customer,
         $this->_date
       ]);
 
+      $id = $this->_db->pdo->lastInsertId();
+
       foreach ($this->_invoicePositions as $position) {
+        $position->setInvoice($id);
         $position->insert();
       }
     }
