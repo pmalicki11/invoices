@@ -80,10 +80,6 @@
       $query = $this->_db->pdo->prepare("SELECT * FROM `{$this->_table}` WHERE `invoice` = ?");
       $query->execute([$id]);
       $results = $query->fetchAll(PDO::FETCH_NAMED);
-
-      if(count($results) == 1) {
-        $this->getFromArray($results[0]);
-      }
       return $results;
     }
   }
