@@ -40,7 +40,7 @@
     </tr>
     <?php foreach($this->positions as $position): ?>
       <tr>
-        <td><?=$position['position']?></td>
+        <td><?=$position['position'] + 1?></td>
         <td><?=$position['name']?></td>
         <td><?=$position['quantity']?></td>
         <td><?=$position['unit']?></td>

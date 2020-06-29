@@ -26,7 +26,7 @@ function addPosition() {
   var legend = document.createElement("legend");
 
   fieldset.setAttribute('class', 'invPositions');
-  fieldset.setAttribute('id', ('invPos-' + numOfPositions));
+  fieldset.setAttribute('id', ('invPos-' + numOfPositions);
   legend.innerHTML = 'Position ' + (numOfPositions + 1);
   fieldset.appendChild(legend);
 
