@@ -88,8 +88,6 @@
         die($e->getMessage());
       }
 
-
-
       $id = $this->_db->pdo->lastInsertId();
       $totalNet = 0;
       $totalGross = 0;
@@ -116,7 +114,8 @@
 
     public function delete($id) {
       $query = $this->_db->pdo->prepare("DELETE FROM `{$this->_table}` WHERE `id` = ?");
-      return $query->execute([$id]);
+      $positions = new InvoicePositions();
+      return ($query->execute([$id]) && $positions->deleteOnInvoiceId($id));
     }
 
 

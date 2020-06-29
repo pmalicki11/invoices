@@ -82,4 +82,9 @@
       $results = $query->fetchAll(PDO::FETCH_NAMED);
       return $results;
     }
+
+    public function deleteOnInvoiceId($id) {
+      $query = $this->_db->pdo->prepare("DELETE FROM `{$this->_table}` WHERE `invoice` = ?");
+      return $query->execute([$id]);
+    }
   }
