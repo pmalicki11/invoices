@@ -75,15 +75,19 @@
           VALUES (?, ?, ?, ?, ?, ?, ?)"
       );
 
-      $query->execute([
-        $this->_name,
-        $this->_address,
-        $this->_taxCode,
-        $this->_zip,
-        $this->_state,
-        $this->_country,
-        $this->_contact
-      ]);
+      try {
+        $query->execute([
+          $this->_name,
+          $this->_address,
+          $this->_taxCode,
+          $this->_zip,
+          $this->_state,
+          $this->_country,
+          $this->_contact
+        ]);
+      } catch (PDOException $e) {
+        die($e->getMessage());
+      }
     }
 
 

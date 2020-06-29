@@ -78,11 +78,17 @@
           VALUES (?, ?, ?)"
       );
 
-      $results = $query->execute([
-        $this->_number,
-        $this->_customer,
-        $this->_date
-      ]);
+      try {
+        $results = $query->execute([
+          $this->_number,
+          $this->_customer,
+          $this->_date
+        ]);
+      } catch (PDOException $e) {
+        die($e->getMessage());
+      }
+
+
 
       $id = $this->_db->pdo->lastInsertId();
       $totalNet = 0;
